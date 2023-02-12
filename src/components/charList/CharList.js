@@ -46,7 +46,9 @@ class CharList extends Component {
             let active = false;
 
             return (
-                <li className={`char__item ${active ? 'char__item_selected' : ''}`} key={char.id}>
+                <li className={`char__item ${active ? 'char__item_selected' : ''}`} 
+                    key={char.id}
+                    onClick={() => this.props.onCharSelected(char.id)}>
                     <img src={char.thumbnail} alt={char.name} style={imgStyle}/>
                     <div className="char__name">{char.name}</div>
                 </li>

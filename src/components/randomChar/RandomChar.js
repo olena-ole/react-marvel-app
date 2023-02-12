@@ -23,7 +23,8 @@ class RandomChar extends Component {
     onCharLoaded = (char) => {
         this.setState({
             char, 
-            loading: false
+            loading: false,
+            error: false            // added to enable TRY btn after error occurred
         })
     }
 

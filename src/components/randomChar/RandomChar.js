@@ -54,7 +54,6 @@ const RandomChar = () => {
 }
 
 const View = ({char}) => {
-    console.log(char);
     const { name, description, thumbnail, homepage, wiki } = char;
     const imgStyle = thumbnail.includes('image_not_available') ? 
                                         {objectFit: 'contain'} : 

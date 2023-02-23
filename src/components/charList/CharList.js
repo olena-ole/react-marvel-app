@@ -73,7 +73,6 @@ const CharList = (props) => {
         );
     }
 
-    // const { characters, loading, error, newItemsLoading, offset, charsEnded } = this.state;
     const items = renderItems(characters);
 
     const errorMessage = error ? <ErrorMessage /> : null;

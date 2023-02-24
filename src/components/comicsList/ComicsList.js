@@ -33,7 +33,6 @@ const ComicsList = () => {
         setComicsEnded(ended);
     }
 
-
     function renderItems(arr) {
         const comicsElements = arr.map(item => {
             return (

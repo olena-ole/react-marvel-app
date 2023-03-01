@@ -17,9 +17,13 @@ const App = () => {
                 <main>
                     <Suspense fallback={<Spinner />}>
                         <Routes>
-                            <Route path="/" element={<MainPage />} />
-                            <Route path="comics" element={<ComicsPage />} />
-                            <Route path="comics/:id" element={<SingleComicsPage />}/>
+                            <Route path="/" element={<MainPage />} />   
+                            <Route path="/comics">
+                                <Route index element={<ComicsPage />} />
+                                <Route path=":id" element={<SingleComicsPage />}/>
+                            </Route>
+                            {/* <Route path="comics" element={<ComicsPage />} />
+                            <Route path="comics/:id" element={<SingleComicsPage />}/> */}
                             <Route path="*" element={<Page404 />} />
                         </Routes>
                     </Suspense>

@@ -5,6 +5,7 @@ import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import './charList.scss';
 
 const CharList = (props) => {
@@ -56,20 +57,26 @@ const CharList = (props) => {
             }
 
             return (
-                <li className="char__item" 
-                    ref={el => itemRefs.current[i] = el}
-                    onClick={() => handleCharacterClick(i, char.id)}
-                    key={char.id}>
-                    <img src={char.thumbnail} alt={char.name} style={imgStyle}/>
-                    <div className="char__name">{char.name}</div>
-                </li>
+                <CSSTransition
+                    key={char.id}
+                    timeout={500}
+                    classNames="char__item">
+                    <li className="char__item" 
+                        ref={el => itemRefs.current[i] = el}
+                        onClick={() => handleCharacterClick(i, char.id)}>
+                        <img src={char.thumbnail} alt={char.name} style={imgStyle}/>
+                        <div className="char__name">{char.name}</div>
+                    </li>
+                </CSSTransition>
             )
         });
 
         return (
-            <ul className="char__grid">
-                {characterElements}
-            </ul>
+            // <ul className="char__grid">
+                <TransitionGroup component={'ul'} className="char__grid">
+                    {characterElements}
+                </TransitionGroup>  
+            // </ul>
         );
     }
 

@@ -72,11 +72,9 @@ const CharList = (props) => {
         });
 
         return (
-            // <ul className="char__grid">
                 <TransitionGroup component={'ul'} className="char__grid">
                     {characterElements}
                 </TransitionGroup>  
-            // </ul>
         );
     }
 

@@ -33,6 +33,7 @@ const useMarvelService = () => {
     }
 
     function _transformCharacter(char) {
+        if (!char) return 'The character was not found. Check the name and try again!';
         return {
             id: char.id,
             name: char.name,

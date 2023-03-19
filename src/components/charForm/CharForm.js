@@ -27,6 +27,7 @@ const CharFrom = () => {
                 <button className="button button__main">
                     <div className="inner">Find</div>
                 </button>
+                {error && <div>error</div>}
             </form>
         </div>
     )

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import useMarvelService from '../../services/MarvelService';
 import { Formik, Form, Field, ErrorMessage as FormikErrorMessage} from 'formik';
 import * as Yup from 'yup';
@@ -19,9 +20,9 @@ const CharFrom = () => {
     const result = char && char.name && (
         <div className="char__form">
             <div className="char__search-success">There is! Visit {char.name} page?</div>
-            <button className="button button__secondary">
+            <Link to={`/characters/${char.id}`} className="button button__secondary">
                 <div className="inner">To page</div>
-            </button>
+            </Link>
         </div>
     )
 

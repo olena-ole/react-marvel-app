@@ -20,12 +20,20 @@
             line-height: 24px;
             color: $main-color;
         }
+        &-success {
+            margin-top: 25px;
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 24px;
+            color: #03710E;
+        }
         &-critical-error {
             margin-top: 25px;
         }
     }
     &__form {
         display: flex;
+        justify-content: space-between;
         align-items: flex-end;
         &-item {
             margin-top: 15px;

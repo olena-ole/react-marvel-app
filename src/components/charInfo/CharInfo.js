@@ -2,11 +2,8 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import useMarvelService from '../../services/MarvelService';
+import setContent from '../../utils/setContent';
 import { uid } from 'uid';
-
-import Spinner from '../spinner/Spinner';
-import ErrorMessage from '../errorMessage/ErrorMessage';
-import Skeleton from '../skeleton/Skeleton';
 
 import './charInfo.scss';
 
@@ -36,30 +33,15 @@ const CharInfo = (props) => {
             .then(() => setProcess('confirmed'))
     }
 
-    const setContent = (process, char) => {
-        switch(process) {
-            case 'waiting':
-                return <Skeleton />;
-            case 'error':
-                return <ErrorMessage />;
-            case 'loading': 
-                return <Spinner />;
-            case 'confirmed':
-                return <View char={char} />;
-            default:
-                throw new Error('Enexpected process state');
-        }
-    }
-
     return (
         <div className="char__info">
-            {setContent(process, char)}
+            {setContent(process, View, char)}
         </div>
     )
 }
 
-const View = ({char}) => {
-    const { name, description, thumbnail, homepage, wiki, comics } = char;
+const View = ({data}) => {
+    const { name, description, thumbnail, homepage, wiki, comics } = data;
 
     const imgStyle = thumbnail.includes('image_not_available') ? 
                                         {objectFit: 'contain'} : 

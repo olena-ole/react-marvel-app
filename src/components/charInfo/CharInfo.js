@@ -12,7 +12,7 @@ import './charInfo.scss';
 
 const CharInfo = (props) => {
     const [char, setChar] = useState(null);
-    const {loading, error, getCharacter, clearError} = useMarvelService();
+    const {getCharacter, clearError, process, setProcess} = useMarvelService();
 
     useEffect(() => {
         updateChar();
@@ -33,19 +33,27 @@ const CharInfo = (props) => {
         clearError();
         getCharacter(charId)
             .then(onCharLoaded)
+            .then(() => setProcess('confirmed'))
     }
 
-    const skeleton = (char || loading || error) ? null : <Skeleton />;
-    const errorMessage = error ? <ErrorMessage /> : null;
-    const spinner = loading ? <Spinner /> : null;
-    const content = !(loading || error || !char) ? <View char={char} /> : null;
+    const setContent = (process, char) => {
+        switch(process) {
+            case 'waiting':
+                return <Skeleton />;
+            case 'error':
+                return <ErrorMessage />;
+            case 'loading': 
+                return <Spinner />;
+            case 'confirmed':
+                return <View char={char} />;
+            default:
+                throw new Error('Enexpected process state');
+        }
+    }
 
     return (
         <div className="char__info">
-            {skeleton}
-            {errorMessage}
-            {spinner}
-            {content}
+            {setContent(process, char)}
         </div>
     )
 }

@@ -7,25 +7,40 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 
 import './charFrom.scss';
 
+function setContent(process, data) {
+    switch(process) {
+        case 'waiting':
+        case 'loading':
+            return null;
+        case 'confirmed':
+            return data.name ?
+                <div className="char__form">
+                    <div className="char__search-success">There is! Visit {data.name} page?</div>
+                    <Link to={`/characters/${data.id}`} className="button button__secondary">
+                        <div className="inner">To page</div>
+                    </Link>
+                </div> :
+                <div className="char__search-error">{data}</div>;
+        case 'error':
+            return <div className="char__search-critical-error"><ErrorMessage /></div>;
+        default:
+            return null;
+    }
+
+}
+
 const CharFrom = () => {
     const [char, setChar] = useState(null);
-    const { error, clearError, getCharacterByName } = useMarvelService();
+    const { clearError, getCharacterByName, process, setProcess } = useMarvelService();
 
     function updateChar(name) {
         clearError();
 
-        getCharacterByName(name).then(res => setChar(res));
+        getCharacterByName(name)
+            .then(res => setChar(res))
+            .then(() => setProcess('confirmed'));
     }
     
-    const result = char && char.name && (
-        <div className="char__form">
-            <div className="char__search-success">There is! Visit {char.name} page?</div>
-            <Link to={`/characters/${char.id}`} className="button button__secondary">
-                <div className="inner">To page</div>
-            </Link>
-        </div>
-    )
-
     return (
         <Formik
             initialValues={{ name: '' }}
@@ -54,9 +69,7 @@ const CharFrom = () => {
                         </button>
                     </Form>
                     <FormikErrorMessage name="name" component="div" className="char__search-error" />
-                    {char && char.length && !error ? <div className="char__search-error">{char}</div> : null}
-                    {error ? <div className="char__search-critical-error"><ErrorMessage /></div> : null}
-                    {result}
+                    {setContent(process, char)}
                 </div>
             )}
         </Formik>

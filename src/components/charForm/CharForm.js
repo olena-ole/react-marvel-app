@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import useMarvelService from '../../services/MarvelService';
 import { Formik, Form, Field, ErrorMessage as FormikErrorMessage} from 'formik';
 import * as Yup from 'yup';
+import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 
 import './charFrom.scss';
@@ -10,8 +11,9 @@ import './charFrom.scss';
 function setContent(process, data) {
     switch(process) {
         case 'waiting':
-        case 'loading':
             return null;
+        case 'loading':
+            return <Spinner/>;
         case 'confirmed':
             return data.name ?
                 <div className="char__form">
@@ -24,7 +26,7 @@ function setContent(process, data) {
         case 'error':
             return <div className="char__search-critical-error"><ErrorMessage /></div>;
         default:
-            return null;
+            throw new Error('Unexpected process state');
     }
 
 }

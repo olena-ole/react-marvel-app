@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import useMarvelService from '../../services/MarvelService';
@@ -94,9 +94,14 @@ const CharList = (props) => {
         );
     }
 
+    const elements = useMemo(() => {
+        return setContent(process, () => renderItems(characters), newItemsLoading);
+        // eslint-disable-next-line
+    }, [process]);
+
     return (
         <div className="char__list">
-            {setContent(process, () => renderItems(characters), newItemsLoading)}
+            {elements}
             <button 
                 className="button button__main button__long"
                 disabled={newItemsLoading}
